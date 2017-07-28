@@ -19,8 +19,10 @@ class LoginViewController: UIViewController {
     let loginButton = UIButton()
     var code : Int!
     var message : String!
-    var DT:Any!
-   // var datas: dataJSON!
+    var role: Double!
+    var token: String!
+    var tokenType: String!
+   var datas: dataJSON!
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
@@ -149,14 +151,23 @@ class LoginViewController: UIViewController {
                     do{
                         let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
                         print(json)
-                        self.code = json["status code"] as? Int
-                        print("core\(self.code)")
-                        self.message = json["messages"] as? String
-                         print("message\(self.message)")
-                       
-                        myVC.nofiLabel.text = (self.message!)
-
-                        print(self.message)
+                        if let code = json["code"] as? Int
+                        {
+                                
+                        }
+//                        self.code = json["code"] as? Int
+//                        self.role = json["data"]?["role"] as! Double
+//                        self.token = json["data"]?["token"] as! String
+//                        self.tokenType = json["data"]?["tokenType"] as! String
+//                        self.message = json["messages"] as? String
+//                        print("core\(self.code)")
+//                        print(self.role!)
+//                        print(self.token)
+//                        print(self.tokenType)
+//                        print("message\(self.message)")
+//                        myVC.nofiLabel.text = ("code:\(self.code),\n\nrole:\(self.role),\n\ntoken:\(self.token),\n\ntokenType:\(self.tokenType)")
+//                        
+//                        print(self.message)
                 }catch let error{
                     print(error)
                    }
@@ -165,4 +176,5 @@ class LoginViewController: UIViewController {
         }.resume()
         self.present(myVC, animated: true, completion: nil)
                    }
+   
 }
