@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
     var role: Double!
     var token: String!
     var tokenType: String!
-   var datas: dataJSON!
+   var dataJSDL: dataJSON!
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
@@ -149,13 +149,12 @@ class LoginViewController: UIViewController {
             }
             if let data = data{
                     do{
-                        let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
+                        var json = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
                         print(json)
-                        if let code = json["code"] as? Int
-                        {
-                                
+                        if json = dataJSDL.code{
+                        
                         }
-//                        self.code = json["code"] as? Int
+                        //                        self.code = json["code"] as? Int
 //                        self.role = json["data"]?["role"] as! Double
 //                        self.token = json["data"]?["token"] as! String
 //                        self.tokenType = json["data"]?["tokenType"] as! String

@@ -11,18 +11,19 @@ import Foundation
 class dataJSON {
     var code : Int!
     var message : String!
-    var role: Double!
-    var token: String!
-    var tokenType: String!
-    init?(code: Int,dataJS:[String:Any],message:String) {
-        self.code = code
-       guard let role = dataJS["role"] as? Double,
-        let token = dataJS["token"] as? String,
-        let tokenType = dataJS["tokenType"] as? String
+    var datas: (code: Double, token: String, tokenType:String)
+    
+    init?(dataJS:[String:Any]) {
+        
+       guard let code = dataJS["code"] as? Int,
+        let dataDL = dataJS["data"] as? [String:Any],
+        let role = dataDL["role"] as? Double,
+        let token = dataDL["token"] as? String,
+        let tokenType = dataDL["tokenType"] as? String,
+        let message = dataJS["messages"] as? String
         else{return nil}
-        self.role = role
-        self.token = token
-        self.tokenType = tokenType
+        self.code = code
+        self.datas=(role,token,tokenType)
         self.message = message
     }
 }
