@@ -12,25 +12,23 @@ class NofiViewController: UIViewController {
 
     var nofiLabel = UILabel()
     var returnButton = UIButton()
+    var datajson: dataJSON?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         nofiLabelAutolayout()
         returnButtonAutoLayOut()
-        
+        // Do any additional setup after loading the view.
+        nofiLabel.text = (" \(String(describing: datajson?.role)) \n \(String(describing: datajson?.token)) \n\(String(describing: datajson?.tokenType))")
     }
 
     func nofiLabelAutolayout() {
         nofiLabel.translatesAutoresizingMaskIntoConstraints = false
         nofiLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        nofiLabel.numberOfLines = 0
-        nofiLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
-        
         view.addSubview(nofiLabel)
-         NSLayoutConstraint(item: nofiLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant:250).isActive = true
         NSLayoutConstraint(item: nofiLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0).isActive = true
-        NSLayoutConstraint(item: nofiLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 50).isActive = true
+        NSLayoutConstraint(item: nofiLabel, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: 0).isActive = true
     }
-
     func returnButtonAutoLayOut() {
         returnButton.translatesAutoresizingMaskIntoConstraints = false
         returnButton.setTitle("Back", for: .normal)

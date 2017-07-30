@@ -19,13 +19,13 @@ class LoginViewController: UIViewController {
     let loginButton = UIButton()
     var code : Int!
     var message : String!
-    var role: Double!
-    var token: String!
-    var tokenType: String!
-   var dataJSDL: dataJSON!
+    var DT:Any!
+    var data = [dataJSON]()
+   // var datas: dataJSON!
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        
         
     }
     
@@ -37,6 +37,7 @@ class LoginViewController: UIViewController {
         userTextFieldAutolayout()
         passTextFieldAutolayout()
         loginButtonAutolayout()
+        loadDataJson()
     }
     func titleAutoLayout(){
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -127,10 +128,8 @@ class LoginViewController: UIViewController {
 //        var dataAR = [dataJSON]()
 //        
 //    }
-    
-    func buttonAction(sender: UIButton!) {
-        print("Tap")
-        let myVC = storyboard?.instantiateViewController(withIdentifier: "Notifi") as! NofiViewController
+    func loadDataJson(){
+          let myVC = storyboard?.instantiateViewController(withIdentifier: "Notifi") as! NofiViewController
         let userLogin = userTextField.text
         let passLogin = (passTextField.text)?.md5()
         let param = ["username": userLogin,"password":passLogin]
@@ -148,32 +147,31 @@ class LoginViewController: UIViewController {
                 print(responses)
             }
             if let data = data{
-                    do{
-                        var json = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
-                        print(json)
-                        if json = dataJSDL.code{
-                        
+                do{
+                    let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String:AnyObject]
+                    print(json)
+                    for _ in json {
+                        if let db = dataJSON.init(jSonDict: json["data"] as! [String : Any]) {
+                            self.data.append(db)
                         }
-                        //                        self.code = json["code"] as? Int
-//                        self.role = json["data"]?["role"] as! Double
-//                        self.token = json["data"]?["token"] as! String
-//                        self.tokenType = json["data"]?["tokenType"] as! String
-//                        self.message = json["messages"] as? String
-//                        print("core\(self.code)")
-//                        print(self.role!)
-//                        print(self.token)
-//                        print(self.tokenType)
-//                        print("message\(self.message)")
-//                        myVC.nofiLabel.text = ("code:\(self.code),\n\nrole:\(self.role),\n\ntoken:\(self.token),\n\ntokenType:\(self.tokenType)")
-//                        
-//                        print(self.message)
+                        
+                    }
+                    
                 }catch let error{
                     print(error)
-                   }
+                }
             }
-
         }.resume()
-        self.present(myVC, animated: true, completion: nil)
-                   }
-   
+        
+        if self.data.count > 0 {
+            myVC.datajson = self.data[0]
+            self.present(myVC, animated: true, completion: nil)
+        }
+    }
+    
+    func buttonAction(sender: UIButton!) {
+        print("Tap")
+        loadDataJson()
+       
+    }
 }
